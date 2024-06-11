@@ -17,13 +17,13 @@ st.write('The name on your Smoothie will be:', name_on_order)
 def create_snowflake_connection():
     # Securely load Snowflake credentials (assumed to be set in Streamlit's secrets)
     return snowflake.connector.connect(
-        user=st.secrets["snowflake"]["ALFONSOURRA"],
-        password=st.secrets["snowflake"]["Caraculo21$"],
-        account=st.secrets["snowflake"]["JTLOAJU.TW99720"],
-        warehouse=st.secrets["snowflake"]["COMPUTE_WH"],
-        database=st.secrets["snowflake"]["SMOOTHIES"],
-        schema=st.secrets["snowflake"]["PUBLIC"],
-        role=st.secrets["snowflake"]["SYSADMIN"],
+        user=st.secrets["snowflake"]["user"],
+        password=st.secrets["snowflake"]["password"],
+        account=st.secrets["snowflake"]["account"],
+        warehouse=st.secrets["snowflake"]["warehouse"],
+        database=st.secrets["snowflake"]["database"],
+        schema=st.secrets["snowflake"]["schema"],
+        role=st.secrets["snowflake"]["role"],
         client_session_keep_alive=st.secrets["snowflake"].get("client_session_keep_alive", False)
     )
 

@@ -38,8 +38,8 @@ try:
     conn = create_snowflake_connection()
 except Exception as e:
     st.error(f"Failed to connect or execute the query: {str(e)}")
-
-my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
+    
+my_dataframe = conn.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
 
 ingredients_list = st.multiselect(
     'Choose up to 5 ingredients:'

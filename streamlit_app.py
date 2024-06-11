@@ -43,13 +43,6 @@ try:
     st.write(f"Current Date from Snowflake: {result[0]}")
 except Exception as e:
     st.error(f"Failed to connect or execute the query: {str(e)}")
-finally:
-    # Check if 'cur' is not None and then close it
-    if cur is not None:
-        cur.close()
-    # Check if 'conn' is not None and then close it
-    if conn is not None:
-        conn.close()
 
 if ingredients_list:
     ingredients_string = ''

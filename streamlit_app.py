@@ -25,7 +25,7 @@ def create_snowflake_connection():
         schema=st.secrets["snowflake"]["PUBLIC"],
         role=st.secrets["snowflake"]["SYSADMIN"],
         client_session_keep_alive=st.secrets["snowflake"].get("client_session_keep_alive", False)
-    )account = "JTLOAJU.TW99720"
+    )
 
 # Establishing the connection
 try:

@@ -13,40 +13,43 @@ st.write(
 )
 name_on_order = st.text_input('Name on Smoothie:')
 st.write('The name on your Smoothie will be:', name_on_order)
+import streamlit as st
+import snowflake.connector
 
 def create_snowflake_connection():
-    # Securely load Snowflake credentials (assumed to be set in Streamlit's secrets)
+    # Load credentials securely
+    sf_credentials = st.secrets["snowflake"]
     return snowflake.connector.connect(
-        user=st.secrets["snowflake"]["user"],
-        password=st.secrets["snowflake"]["password"],
-        account=st.secrets["snowflake"]["account"],
-        warehouse=st.secrets["snowflake"]["warehouse"],
-        database=st.secrets["snowflake"]["database"],
-        schema=st.secrets["snowflake"]["schema"],
-        role=st.secrets["snowflake"]["role"],
-        client_session_keep_alive=st.secrets["snowflake"].get("client_session_keep_alive", False)
+        user=sf_credentials["user"],
+        password=sf_credentials["password"],
+        account=sf_credentials["account"],
+        warehouse=sf_credentials["warehouse"],
+        database=sf_credentials["database"],
+        schema=sf_credentials["schema"],
+        role=sf_credentials["role"],
+        client_session_keep_alive=sf_credentials.get("client_session_keep_alive", False)
     )
 
-# Establishing the connection
+# Initialize 'conn' and 'cur' to None to ensure they are defined
+conn = None
+cur = None
+
 try:
     conn = create_snowflake_connection()
-    cur = conn.cursor(DictCursor)
-    cur.execute("SELECT FRUIT_NAME FROM SMOOTHIES.PUBLIC.FRUIT_OPTIONS")
-    rows = cur.fetchall()
-    # Display the data in Streamlit
-    st.write(rows)
+    cur = conn.cursor()
+    # Example query
+    cur.execute("SELECT CURRENT_DATE()")
+    result = cur.fetchone()
+    st.write(f"Current Date from Snowflake: {result[0]}")
 except Exception as e:
     st.error(f"Failed to connect or execute the query: {str(e)}")
 finally:
+    # Check if 'cur' is not None and then close it
     if cur is not None:
         cur.close()
+    # Check if 'conn' is not None and then close it
     if conn is not None:
         conn.close()
-ingredients_list = st.multiselect(
-    'Choose up to 5 ingredients:'
-    ,my_dataframe,
-    max_selections=5
-)
 
 if ingredients_list:
     ingredients_string = ''

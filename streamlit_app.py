@@ -39,6 +39,13 @@ try:
 except Exception as e:
     st.error(f"Failed to connect or execute the query: {str(e)}")
 
+
+ingredients_list = st.multiselect(
+    'Choose up to 5 ingredients:'
+    ,my_dataframe,
+    max_selections=5
+)
+
 if ingredients_list:
     ingredients_string = ''
 

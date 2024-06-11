@@ -36,11 +36,6 @@ cur = None
 
 try:
     conn = create_snowflake_connection()
-    cur = conn.cursor()
-    # Example query
-    cur.execute("SELECT CURRENT_DATE()")
-    result = cur.fetchone()
-    st.write(f"Current Date from Snowflake: {result[0]}")
 except Exception as e:
     st.error(f"Failed to connect or execute the query: {str(e)}")
 
